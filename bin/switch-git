@@ -1,0 +1,18 @@
+#!/usr/bin/env ruby
+require 'git_ssh_identity_switch'
+
+if ARGV.length == 0
+  exit(1)
+end
+
+if ARGV.first == '--init'
+  main = GitSshIdentitySwitch.new(config_path: '~/.git_ssh_identity.json')
+  main.init_config
+else
+  main = GitSshIdentitySwitch.new(config_path: './example.json')
+  if ARGV.first == '--list'
+    puts main.usernames
+  else
+    puts main.run!(username: ARGV.first)
+  end
+end
